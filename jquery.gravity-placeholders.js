@@ -27,52 +27,77 @@
  * DEALINGS IN THE SOFTWARE.
  *
  * @author    Jason Lengstorf <jason@lengstorf.com>
- * @version   1.0
+ * @version   1.1
  * @copyright 2012 Jason Lengstorf
  * @license   MIT License (http://opensource.org/licenses/mit-license.php)
  */
-(function($){
+;(function( $, window, document, undefined ) {
 
-    $.fn.gravityPlaceholders = function(  )
+    var pluginName = 'gravityPlaceholders',
+        defaults   = {
+            className: 'showingPlaceholder'
+        };
+
+    function gravityPlaceholders( element, options )
     {
-        this.closest('form')
-            .submit(function() {
-                // Empties any placeholder values before submission
-                this.each(function() {
-                    var input = $(this);
-                    if (input.val()===labelText) {
-                        input.val('');
-                    }
-                })
+        this.element   = element;
+        this.options   = $.extend({}, defaults, options);
+        this._defaults = defaults;
+        this._name     = pluginName;
+
+        this.init();
+    }
+
+    gravityPlaceholders.prototype.init = function() {
+        var options = this.options,
+            input   = $(this.element),
+            thisID  = input.attr('id'),
+            label   = $('label[for='+thisID+']').hide(),
+
+            // Removes the "required" span (if present), returns text
+            labelText = label.find('span').remove().end().text();
+
+        // Empties any placeholder values before submission
+        input.closest('form').submit(function() {
+            this.each(function() {
+                var input = $(this);
+                if (input.val()===labelText) {
+                    input.val('');
+                }
             });
-
-        return this.each(function() {
-            var input  = $(this),
-                thisID = input.attr('id'),
-                label  = $('label[for='+thisID+']').hide(),
-
-                // Removes the "required" span (if present), returns text
-                labelText = label.find('span').remove().end().text();
-
-            // If the input is empty, uses the label text as a "placeholder"
-            if (input.val() == '') {
-                input.val( labelText );
-            } 
-
-            input
-                .focus(function() {
-                    // Empties the input onfocus if value is the placeholder
-                    if (input.val()===labelText) {
-                        input.val('');
-                    }
-                })
-                .blur(function() {
-                    // Puts the placeholder in onblur if no value was entered
-                    if (input.val()==='' || input.val()===labelText) {
-                        input.val(labelText);
-                    }
-                });
         });
-    };
 
-})(jQuery);
+        // If the input is empty, uses the label text as a "placeholder"
+        if (input.val() == '') {
+            input.val( labelText ).addClass(options.className);
+        } 
+
+        input.bind({
+            // Empties the input onfocus if value is the placeholder
+            focus: function() {
+                if (input.val()===labelText) {
+                    input.val('').removeClass(options.className);
+                }
+            },
+            // Puts the placeholder in onblur if no value was entered
+            blur: function() {
+                if (input.val()==='' || input.val()===labelText) {
+                    input.val(labelText).addClass(options.className);
+                }
+            }
+        });
+    }
+
+    $.fn[pluginName] = function( options ) {
+        return this.each(function() {
+            if (!$.data(this, 'plugin_'+pluginName)) {
+                $.data(
+                    this,
+                    'plugin_' + pluginName,
+                    new gravityPlaceholders(this, options)
+                );
+            }
+        });
+    }
+
+})( jQuery, window, document );
