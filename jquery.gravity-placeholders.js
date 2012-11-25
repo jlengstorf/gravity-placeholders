@@ -27,7 +27,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  * @author    Jason Lengstorf <jason@lengstorf.com>
- * @version   1.1
+ * @version   1.1.0
  * @copyright 2012 Jason Lengstorf
  * @license   MIT License (http://opensource.org/licenses/mit-license.php)
  */
