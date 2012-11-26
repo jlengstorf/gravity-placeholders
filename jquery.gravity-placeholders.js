@@ -2,7 +2,7 @@
  * Gravity Placeholders jQuery Plugin
  *
  * A quick-and-dirty jQuery plugin that hides the labels of the selected
- * inputs and uses the contained text as a placeholder. Specifically designed 
+ * inputs and uses the label text as a placeholder. Specifically designed 
  * for Gravity Forms (v1.6.7 at the time of development).
  *
  * Copyright (c) 2012 Jason Lengstorf
