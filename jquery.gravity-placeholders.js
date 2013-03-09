@@ -38,7 +38,7 @@
             className: 'showingPlaceholder'
         };
 
-    function gravityPlaceholders( element, options )
+    function GravityPlaceholders( element, options )
     {
         this.element   = element;
         this.options   = $.extend({}, defaults, options);
@@ -48,11 +48,14 @@
         this.init();
     }
 
-    gravityPlaceholders.prototype.init = function() {
+    GravityPlaceholders.prototype.init = function() {
         var options = this.options,
             input   = $(this.element),
             thisID  = input.attr('id'),
             label   = $('label[for='+thisID+']').hide(),
+
+            // Checks for native placeholder support
+            is_placeholder = 'placeholder' in document.createElement('input'),
 
             // Removes the "required" span (if present), returns text
             labelText = label.find('span').remove().end().text();
@@ -68,9 +71,13 @@
         });
 
         // If the input is empty, uses the label text as a "placeholder"
-        if (input.val() == '') {
-            input.val( labelText ).addClass(options.className);
-        } 
+        if (input.val()==='') {
+            if (is_placeholder) {
+                input.attr('placeholder', labelText);
+            } else {
+                input.val( labelText ).addClass(options.className);
+            }
+        }
 
         input.bind({
             // Empties the input onfocus if value is the placeholder
@@ -81,12 +88,12 @@
             },
             // Puts the placeholder in onblur if no value was entered
             blur: function() {
-                if (input.val()==='' || input.val()===labelText) {
+                if ((input.val()==='' || input.val()===labelText) && !is_placeholder) {
                     input.val(labelText).addClass(options.className);
                 }
             }
         });
-    }
+    };
 
     $.fn[pluginName] = function( options ) {
         return this.each(function() {
@@ -94,10 +101,10 @@
                 $.data(
                     this,
                     'plugin_' + pluginName,
-                    new gravityPlaceholders(this, options)
+                    new GravityPlaceholders(this, options)
                 );
             }
         });
-    }
+    };
 
 })( jQuery, window, document );
