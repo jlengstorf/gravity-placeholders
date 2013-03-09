@@ -5,7 +5,7 @@
  * inputs and uses the label text as a placeholder. Specifically designed 
  * for Gravity Forms (v1.6.7 at the time of development).
  *
- * Copyright (c) 2012 Jason Lengstorf
+ * Copyright (c) 2013 Jason Lengstorf
  *
  * LICENSE: Permission is hereby granted, free of charge, to any person 
  * obtaining a copy of this software and associated documentation files (the 
@@ -27,8 +27,8 @@
  * DEALINGS IN THE SOFTWARE.
  *
  * @author    Jason Lengstorf <jason@lengstorf.com>
- * @version   1.1.0
- * @copyright 2012 Jason Lengstorf
+ * @version   1.2.0
+ * @copyright 2013 Jason Lengstorf
  * @license   MIT License (http://opensource.org/licenses/mit-license.php)
  */
 ;(function( $, window, document, undefined ) {
