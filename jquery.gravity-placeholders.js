@@ -27,7 +27,7 @@
  * DEALINGS IN THE SOFTWARE.
  *
  * @author    Jason Lengstorf <jason@lengstorf.com>
- * @version   1.2.0
+ * @version   1.2.1
  * @copyright 2013 Jason Lengstorf
  * @license   MIT License (http://opensource.org/licenses/mit-license.php)
  */
@@ -59,6 +59,11 @@
 
             // Removes the "required" span (if present), returns text
             labelText = label.find('span').remove().end().text();
+
+        // Identifies complex ginputs and uses the nearest label instead
+        if (label.next('.ginput_container').hasClass('ginput_complex')) {
+            labelText = input.next('label').text();
+        }
 
         // Empties any placeholder values before submission
         input.closest('form').submit(function() {
