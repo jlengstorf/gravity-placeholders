@@ -3,7 +3,7 @@ Gravity Placeholders
 
 A quick-and-dirty jQuery plugin that hides the labels of the selected
 inputs and uses the contained text as a placeholder. Specifically designed 
-for Gravity Forms (v1.6.7 at the time of development).
+for Gravity Forms.
 
 Using the Plugin
 ----------------
@@ -20,6 +20,28 @@ To target only standard text inputs:
 For more information on targeting specific inputs, refer to the 
 [Gravity Forms Documentation][1].
 
+
+Changelog
+---------
+
+### 1.2.1
+
+* Added better placeholders for complex inputs
+* Verified support for Gravity Forms through v1.7.6.10
+
+### 1.2.0
+
+* Added native placeholder support with a `value` fallback for older browsers
+
+### 1.1.0
+
+* Complete overhaul of the plugin structure
+
+### 1.0.0
+
+* Initial release
+
+
 Authors
 -------
 
@@ -27,6 +49,7 @@ Authors
 
 * http://twitter.com/jlengstorf
 * http://github.com/jlengstorf
+
 
 Copyright and license
 ---------------------
